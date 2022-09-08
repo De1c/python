@@ -106,8 +106,8 @@ def sort(path):
 def files_for_direction(path):
     
     sorted_files = sort(path)
-    
-    def check_for_empty (direction):
+    print(sorted_files)
+    def check_for_empty (direction, folder_name):
         """Checking if the directory is empty
 
         Args:
@@ -117,15 +117,13 @@ def files_for_direction(path):
             bool : True if the folder is not empty
         """
         
-        
+
         if os.path.isdir(os.path.join(dir, direction)):
             if path not in [dir_i, dir_d, dir_v, dir_a, dir_ar, dir_u]:
-                if len(check_for_empty) == 0:
-                    send2trash(f'{path}\\{direction}')
-                    sorted_files['unknkown'].remove(direction)
+                if len(os.listdir(os.path.join(dir, direction))) == 0:
+                    send2trash(os.path.join(dir, direction))
+                    sorted_files['unknown_list'].remove(folder_name)
                     return False
-            else:
-                return True
         else:
             return True
 
@@ -147,22 +145,21 @@ def files_for_direction(path):
     for each_type in sorted_files.values():
         for each_file in each_type:
             path_each_file = os.path.join(dir, each_file)
-            if each_file in ['images', 'video', 'documents', 'audio', 'archives', 'unknkown']:
+            if each_file in ['images', 'video', 'documents', 'audio', 'archives', 'unknown']:
                 continue
             elif os.path.isdir(path_each_file):
-                if check_for_empty(path_each_file):
+                if check_for_empty(path_each_file, each_file):
                     files_for_direction(path_each_file)
-            else:
-                for files in sorted_files['image_list']:
-                    shutil.move(os.path.join(dir, files), dir_i)
-                for files in sorted_files['video_list']:
-                    shutil.move(os.path.join(dir, files), dir_v)
-                for files in sorted_files['documents_list']:
-                    shutil.move(os.path.join(dir, files), dir_d)
-                for files in sorted_files['audio_list']:
-                    shutil.move(os.path.join(dir, files), dir_a)
-                for files in sorted_files['archives_list']:
-                    shutil.unpack_archive(os.path.join(dir, files), os.path.join(dir_ar, files))
+    for files in sorted_files['image_list']:
+        shutil.move(os.path.join(dir, files), dir_i)
+    for files in sorted_files['video_list']:
+        shutil.move(os.path.join(dir, files), dir_v)
+    for files in sorted_files['documents_list']:
+        shutil.move(os.path.join(dir, files), dir_d)
+    for files in sorted_files['audio_list']:
+        shutil.move(os.path.join(dir, files), dir_a)
+    for files in sorted_files['archives_list']:
+        shutil.unpack_archive(os.path.join(dir, files), os.path.join(dir_ar, files))
                 
 
 
