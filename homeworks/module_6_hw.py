@@ -1,6 +1,7 @@
 import os
 import re
 import shutil
+import sys
 from send2trash import send2trash
 
 CYRILLIC_SYMBOLS = "абвгдеёжзийклмнопрстуфхцчшщъыьэюяєіїґ"
@@ -9,13 +10,18 @@ TRANSLATION = (
     "l", "m", "n", "o", "p", "r", "s", "t", "u",
     "f", "h", "ts", "ch", "sh", "sch", "", "y", "", "e", "yu", "ya", "je", "i", "ji", "g"
 )
-TYPES = [['jpeg', 'png', 'jpg', 'svg'],
+TYPES = [
+        ['jpeg', 'png', 'jpg', 'svg'],
         ['avi', 'mp4', 'mov', 'mkv'],
         ['doc', 'docx','txt', 'pdf', 'xlsx', 'pptx'],
         ['mp3', 'ogg', 'wav', 'amr'],
         ['zip', 'gz', 'tar']
         ]
-images, videos, documents, music, archives = TYPES[0], TYPES[1], TYPES[2], TYPES[3], TYPES[4]
+images = TYPES[0]
+videos = TYPES[1]
+documents = TYPES[2]
+music = TYPES[3]
+archives = TYPES[4]
 
 
 TRANS = {}
@@ -24,13 +30,13 @@ for c, l in zip(CYRILLIC_SYMBOLS, TRANSLATION):
     TRANS[ord(c)] = l
     TRANS[ord(c.upper())] = l.upper()
 
-dir = input('Input your path for sorting: ')
-dir_i = r'C:\Users\Deic\Desktop\For HW\images'
-dir_d = r'C:\Users\Deic\Desktop\For HW\documents'
-dir_v = r'C:\Users\Deic\Desktop\For HW\video'
-dir_a = r'C:\Users\Deic\Desktop\For HW\audio'
-dir_ar = r'C:\Users\Deic\Desktop\For HW\archives'
-dir_u = r'C:\Users\Deic\Desktop\For HW\unknown'
+dir = sys.argv[1]
+dir_i = os.path.join(dir, 'images')
+dir_d = os.path.join(dir, 'documents')
+dir_v = os.path.join(dir, 'video')
+dir_a = os.path.join(dir, 'audio')
+dir_ar = os.path.join(dir, 'archives')
+dir_u = os.path.join(dir, 'unknown')
 
 def normalize(path):
     """normalize's files names in path folder
@@ -41,7 +47,8 @@ def normalize(path):
 
 
     for each_file in os.listdir(path):
-        if os.path.isdir(f'{path}\\{each_file}'):
+        path_for_each_file = os.path.join(dir, f'{each_file}')
+        if os.path.isdir(path_for_each_file):
             continue
         else:
             splited = each_file.split('.')
@@ -49,7 +56,7 @@ def normalize(path):
             if not bool(re.match(r'\W', translated)):
                 clear = re.sub(r'\W', '_', translated)
                 complete = f'{clear}.{splited[1].lower()}'
-                os.rename(f'{dir}\\{each_file}', f'{dir}\\{complete}')
+                os.rename(path_for_each_file, os.path.join(dir, complete))
             else:
                 continue
 
@@ -70,8 +77,9 @@ def sort(path):
     archives_list = []
     unknown_list = []
     for each_file in os.listdir(path):
-        if os.path.isdir(f'{path}\\{each_file}'):
-            if f'{path}\\{each_file}' not in [dir_i, dir_d, dir_v, dir_a, dir_ar, dir_u]:
+        path_for_each_file = os.path.join(dir, f'{each_file}')
+        if os.path.isdir(path_for_each_file):
+            if path_for_each_file not in [dir_i, dir_d, dir_v, dir_a, dir_ar, dir_u]:
                 unknown_list.append(each_file)
         else:
             spl = each_file.split('.')
@@ -110,7 +118,7 @@ def files_for_direction(path):
         """
         
         
-        if os.path.isdir(f'{path}\\{direction}'):
+        if os.path.isdir(os.path.join(dir, direction)):
             if path not in [dir_i, dir_d, dir_v, dir_a, dir_ar, dir_u]:
                 if len(check_for_empty) == 0:
                     send2trash(f'{path}\\{direction}')
@@ -138,7 +146,7 @@ def files_for_direction(path):
         
     for each_type in sorted_files.values():
         for each_file in each_type:
-            path_each_file = f'{path}\\{each_file}'
+            path_each_file = os.path.join(dir, each_file)
             if each_file in ['images', 'video', 'documents', 'audio', 'archives', 'unknkown']:
                 continue
             elif os.path.isdir(path_each_file):
@@ -146,15 +154,15 @@ def files_for_direction(path):
                     files_for_direction(path_each_file)
             else:
                 for files in sorted_files['image_list']:
-                    shutil.move(f'{path}\\{files}', dir_i)
+                    shutil.move(os.path.join(dir, files), dir_i)
                 for files in sorted_files['video_list']:
-                    shutil.move(f'{path}\\{files}', dir_v)
+                    shutil.move(os.path.join(dir, files), dir_v)
                 for files in sorted_files['documents_list']:
-                    shutil.move(f'{path}\\{files}', dir_d)
+                    shutil.move(os.path.join(dir, files), dir_d)
                 for files in sorted_files['audio_list']:
-                    shutil.move(f'{path}\\{files}', dir_a)
+                    shutil.move(os.path.join(dir, files), dir_a)
                 for files in sorted_files['archives_list']:
-                    shutil.unpack_archive(f'{path}\\{files}', f'{dir_ar}\\{files}')
+                    shutil.unpack_archive(os.path.join(dir, files), os.path.join(dir_ar, files))
                 
 
 
@@ -164,6 +172,5 @@ def files_for_direction(path):
 
 if __name__ == '__main__':
     normalize(dir)
-    my_dict = sort(dir)
     files_for_direction(dir)
     
