@@ -1,8 +1,14 @@
 Metadata-Version: 2.1
 Name: clean-folder
+<<<<<<< HEAD
 Version: 1.0
 Summary: Cleaning tool
 Home-page: https://github.com/De1c/python/tree/main/clean_folder
+=======
+Version: 1
+Summary: Cleaning tool
+Home-page: http://github.com/dummy_user/useful
+>>>>>>> 67303273d9262070b923d7c30a9be353cfd08ece
 Author: Yehor Serdiuk
 Author-email: denpro8350@gmail.com
 License: GOIT

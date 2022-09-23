@@ -1,1 +1,5 @@
+<<<<<<< HEAD
 send2trash
+=======
+markdown
+>>>>>>> 67303273d9262070b923d7c30a9be353cfd08ece

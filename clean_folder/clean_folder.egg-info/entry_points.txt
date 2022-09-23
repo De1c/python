@@ -1,2 +1,6 @@
 [console_scripts]
+<<<<<<< HEAD
 clean_folder = clean_folder.clean:start
+=======
+start = clean_folder.clean:start
+>>>>>>> 67303273d9262070b923d7c30a9be353cfd08ece
