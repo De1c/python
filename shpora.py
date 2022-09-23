@@ -1,25 +1,65 @@
-import timeit
-
-def func_one(n):
-    return [str(num) for num in range(n)]
-
-def func_two(n):
-    return list(map(str, range(n)))
+# import re
 
 
-setup = '''
-def func_one(n):
-    return [str(num) for num in range(n)]
-'''
-stmt = 'func_one(100)'
+# def token_parser(s):
 
-print(timeit.timeit(stmt, setup, number=1000))
+    # final_list = []
+    # my_list = re.findall(r'\d+', s)
+    # my_list2 = re.findall(r'\+|\-|\/|\*', s)
+    # for el1, el2 in zip(my_list, my_list2):
+        # final_list.append(el1)
+        # final_list.append(el2)
+    # las_el = my_list[-1]
+    # final_list.append(las_el)
+    # return final_list
 
-setup2 = '''
-def func_two(n):
-    return list(map(str,range(n)))
-'''
 
-stmt2 = 'func_two(100)'
+# print(token_parser("2+ 34 -5 * 3"))
 
-print(timeit.timeit(stmt2, setup2, number=1000))
+# my_list = []
+# my_list.append(None)
+# print(my_list)
+
+
+# #Debugging with logging
+# import logging
+
+# #Default level is third, but we can change with logging.basicConfig()
+# logging.basicConfig(level=logging.DEBUG)
+
+# logging.debug('Debug is the lowest log level in severity')
+# logging.info('Info is the second lowest log level')
+# logging.warning('Warning is the third level')
+# logging.error('Errod is the fourth level')
+# logging.critical('Critical is the fifth ahd hightest level
+
+# import shutil
+# shutil.make_archive()
+
+# my_list = []
+# my_list.append([6])
+# print(my_list)
+# list(6)
+
+# for i, index in enumerate(my_list):
+#     print(i, index)
+
+
+# print(my_list)
+
+# TYPES = [
+#         ['jpeg', 'png', 'jpg', 'svg'],
+#         ['avi', 'mp4', 'mov', 'mkv'],
+#         ['doc', 'docx', 'txt', 'pdf', 'xlsx', 'pptx'],
+#         ['mp3', 'ogg', 'wav', 'amr'],
+#         ['zip', 'gz', 'tar']
+# ]
+
+# for e_type in TYPES:
+#     for ee in e_type:
+#         with open(f"C:\\Users\\Deic\\Desktop\\ForHW\\New_file.{ee}", 'w') as ph:
+#             pass
+
+f = {'a': 1}
+print(dir(f))
+

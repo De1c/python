@@ -1,2 +1,2 @@
 [console_scripts]
-start = clean_folder.clean:start
+clean_folder = clean_folder.clean:start
