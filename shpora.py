@@ -1,4 +1,3 @@
-# import re
 
 
 # def token_parser(s):
@@ -60,6 +59,9 @@
 #         with open(f"C:\\Users\\Deic\\Desktop\\ForHW\\New_file.{ee}", 'w') as ph:
 #             pass
 
-f = {'a': 1}
-print(dir(f))
+# f = {'a': 1}
+# print(dir(f))
 
+# some_str = 'aaAbbB C F DDd EEe'
+# for i in filter(lambda x: x.islower(), some_str):
+    # print(i) - Only Lower
