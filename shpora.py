@@ -65,3 +65,9 @@
 # some_str = 'aaAbbB C F DDd EEe'
 # for i in filter(lambda x: x.islower(), some_str):
     # print(i) - Only Lower
+
+# string = 'Hello'
+# lst = ['world', 'friend', 'Yehor']
+# for el in map(lambda x: x, lst):
+#     print(f'{string} {el}', end = ' ')
+
