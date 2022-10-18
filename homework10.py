@@ -75,9 +75,9 @@ def add_rec(book, name, phone = None):
 
 
 @input_error
-def change(book, name, new_phone):
-    book.data[name].change(new_phone)
-    return f'Number has been changed for '
+def change(book, name, old_phone, new_phone):
+    book.data[name].change(old_phone, new_phone)
+    return f'Number {old_phone} has been changed for {new_phone}'
 
 @input_error
 def show_phone(book, name):
@@ -124,6 +124,8 @@ def main():
                 break
         if parameters:
             spl_par = parameters.split()
+            if my_operation == 'change':
+                return operate(my_operation)(book, spl_par[0], spl_par[1], spl_par[2])
             if len(spl_par) > 1:
                 return operate(my_operation)(book, spl_par[0], spl_par[1])
             return operate(my_operation)(book, parameters)
