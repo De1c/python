@@ -1,4 +1,3 @@
-my_dict = {}
 
 def input_error(func):
     

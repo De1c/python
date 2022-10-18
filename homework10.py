@@ -21,40 +21,35 @@ def input_error(func):
 
 class AdressBook(UserDict):
 
-    def add_record(self, name, phone = None):
-        record = Record(Name(name))
-        phone = Phone(phone)
-        self.data[Name(name)] = record
-        if phone.value:
-            record.add(phone)
-            self.data[record.name.value] = record
+    def add_record(self, record):
+        self.data[record.name.value] = record
         print('Address book recieved new record')
-    
-    
-    def show_all(self):
+
+    def __repr__(self):
         return self.data
-    
+
+
 class Record:
-    
-    def __init__(self, name):
+
+    def __init__(self, name, phones = None):
         self.name = name
-        self.phones = []
+        self.phones = [phones]
 
     def add(self, phone):
         self.phones.append(Phone(phone))
         return f'Number {phone} has been added'
-    
-    def change(self, phone, old_phone):
-        self.phones.remove(Phone(old_phone))
-        self.phones.append(Phone(phone))
-        return f'Number {old_phone} has been changed for {phone}'
 
+    def change(self, phone):
+        for each_phone in self.phones:
+            if Phone(phone) == each_phone:
+                self.phones.remove(Phone(phone))
+                self.add(Phone(phone))
+                return f'Number {each_phone} has been changed for {phone}'
+        return f'{phone} not found'
 
-    def phone(self):
-        return f'Phone numbers for {self.name} is {self.phones}'
 
 class Field:
-    
+
     def __init__(self, value):
         self.value = value
 
@@ -68,14 +63,35 @@ class Phone(Field):
 
 
 @input_error
-def hello():
+def hello(book):
     return "How can I help you?"
 
 
 @input_error
-def close():
-    return 'Good bye'
+def add_rec(book, name, phone = None):
 
+    book.add_record(Record(Name(name), Phone(phone)))
+    return f'{name} has been added'
+
+
+@input_error
+def change(book, name, new_phone):
+    book.data[Record(Name(name)).name.value].change(new_phone)
+    return f'Number has been changed for '
+
+@input_error
+def show_phone(book, name):
+    return book.data[Record(Name(name)).name.value].phones
+    
+    
+@input_error
+def show_all(book):
+    return book.__repr__()
+
+
+@input_error
+def close(book):
+    return 'Good bye'
 
 
 def main():
@@ -84,11 +100,10 @@ def main():
 
     OPERATIONS = {
         'hello': hello,
-        'add': book.add_record,
-        'add phone': book.data,
-        'change': Record.change,
-        'phone': Record.phone,
-        'show all': book.show_all,
+        'add': add_rec,
+        'change': change,
+        'phone': show_phone,
+        'show all': show_all,
         'exit': close,
         'close': close,
         'good bye': close
@@ -110,9 +125,9 @@ def main():
         if parameters:
             spl_par = parameters.split()
             if len(spl_par) > 1:
-                return operate(my_operation)(spl_par[0], spl_par[1])
-            return operate(my_operation)(parameters)
-        return operate(my_operation)()
+                return operate(my_operation)(book, spl_par[0], spl_par[1])
+            return operate(my_operation)(book, parameters)
+        return operate(my_operation)(book)
 
     while True:
         user_input = input('Please enter command: ')
