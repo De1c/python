@@ -71,3 +71,6 @@
 # for el in map(lambda x: x, lst):
 #     print(f'{string} {el}', end = ' ')
 
+
+my_object = True
+print(isinstance(my_object, int), (type(my_object) == int))

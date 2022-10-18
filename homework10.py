@@ -39,13 +39,13 @@ class Record:
         self.phones.append(Phone(phone))
         return f'Number {phone} has been added'
 
-    def change(self, phone):
+    def change(self, old_phone, new_phone):
         for each_phone in self.phones:
-            if Phone(phone) == each_phone:
-                self.phones.remove(Phone(phone))
-                self.add(Phone(phone))
-                return f'Number {each_phone} has been changed for {phone}'
-        return f'{phone} not found'
+            if Phone(old_phone) == each_phone:
+                self.phones.remove(Phone(old_phone))
+                self.add(Phone(new_phone))
+                return f'Number {each_phone} has been changed for {new_phone}'
+        return f'{old_phone} not found'
 
 
 class Field:
@@ -76,12 +76,12 @@ def add_rec(book, name, phone = None):
 
 @input_error
 def change(book, name, new_phone):
-    book.data[Record(Name(name)).name.value].change(new_phone)
+    book.data[name].change(new_phone)
     return f'Number has been changed for '
 
 @input_error
 def show_phone(book, name):
-    return book.data[Record(Name(name)).name.value].phones
+    return book.data[name].phones
     
     
 @input_error
