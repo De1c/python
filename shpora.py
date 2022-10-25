@@ -72,5 +72,9 @@
 #     print(f'{string} {el}', end = ' ')
 
 
-my_object = True
-print(isinstance(my_object, int), (type(my_object) == int))
+# my_object = True
+# print(isinstance(my_object, int)) -> True (WTF?????)
+
+import re
+
+re.fullmatch()
