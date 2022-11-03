@@ -1,7 +1,7 @@
 from collections import UserDict
 import datetime
 import re
-
+import pickle
 
 def input_error(func):
 
@@ -157,58 +157,97 @@ def close(book):
 def days_to_birthday(book, name):
     return book.data[name].days_to_birthday()
 
-
+@input_error
 def show_n_records(book, count: int):
     return [i for i in book.iterator(count)]
 
 
-def main():
+@input_error
+def save_to_file(book, filename):
 
-    book = AdressBook()
+    with open(filename, 'wb') as fh:
+        pickle.dump(book, fh)
+        return f'{filename} has been saved'
 
-    OPERATIONS = {
-        'hello': hello,
-        'add': add_rec,
-        'change': change,
-        'phone': show_phone,
-        'show all': show_all,
-        'exit': close,
-        'close': close,
-        'good bye': close,
-        'birthday': days_to_birthday,
-        'show': show_n_records
+@input_error
+def load_from_file(filename):
+
+    global book
+    with open(filename, 'rb') as fh:
+        book = pickle.load(fh)
+        return f'Loaded {filename}'
+
+
+
+def check_the_list(book, name_or_number: str):
+    
+    if name_or_number.startswith('+'):
+        for contact, record in book.data.items():
+            for phone in record.phones:
+                if re.match(f"\{name_or_number}", phone.value):
+                    return f"This phone number is in the {contact}"
+        return f"Contact with number {name_or_number} not found"
+    else:
+        for contact, record in book.data.items():
+            if re.match(name_or_number, contact):
+                return f"{name_or_number} is in the {contact}"
+        return f"Contact with name {name_or_number} not found"
+
+
+
+book = AdressBook()
+
+OPERATIONS = {
+    'hello': hello,
+    'add': add_rec,
+    'change': change,
+    'phone': show_phone,
+    'show all': show_all,
+    'exit': close,
+    'close': close,
+    'good bye': close,
+    'birthday': days_to_birthday,
+    'show': show_n_records,
+    'save': save_to_file,
+    'load': load_from_file,
+    'find': check_the_list
     }
 
-    def operate(user_input):
-        return OPERATIONS.get(user_input)
 
-    def handler(user_input):
+def operate(user_input):
+    return OPERATIONS.get(user_input)
 
-        my_operation = None
-        parameters = ''
-        for operation in OPERATIONS:
-            if user_input.lower().startswith(operation):
-                my_operation = operation
-                parameters = user_input[len(operation):]
-                break
-        if parameters:
-            spl_par = parameters.split()
-            if my_operation == 'change':
-                return operate(my_operation)(book, spl_par[0], spl_par[1], spl_par[2])
-            if len(spl_par) > 2:
-                return operate(my_operation)(book, spl_par[0], spl_par[1], spl_par[2])
-            if len(spl_par) > 1:
-                return operate(my_operation)(book, spl_par[0], spl_par[1])
-            return operate(my_operation)(book, parameters.strip())
-        return operate(my_operation)(book)
 
+def handler(user_input):
+    my_operation = None
+    parameters = ''
+    for operation in OPERATIONS:
+        if user_input.lower().startswith(operation):
+            my_operation = operation
+            parameters = user_input[len(operation):]
+            break
+    if parameters:
+        spl_par = parameters.split()
+        if my_operation == 'load':
+            return operate(my_operation)(parameters.strip())
+        if my_operation == 'change':
+            return operate(my_operation)(book, spl_par[0], spl_par[1], spl_par[2])
+        if len(spl_par) > 2:
+            return operate(my_operation)(book, spl_par[0], spl_par[1], spl_par[2])
+        if len(spl_par) > 1:
+            return operate(my_operation)(book, spl_par[0], spl_par[1])
+        return operate(my_operation)(book, parameters.strip())
+    return operate(my_operation)(book)
+
+
+def main():
     while True:
         user_input = input('Please enter command: ')
         output = handler(user_input)
-        print(output)
+        if output:
+            print(output)
         if output == 'Good bye':
             break
-
 
 if __name__ == '__main__':
     main()
