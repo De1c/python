@@ -86,9 +86,8 @@ class Birthday(Field):
     
     @value.setter
     def value(self, new_birthday):
-        if not new_birthday:
-            pass
-        else:
+        
+        if new_birthday:
             new_birthday_clear = new_birthday.strip()
             match = re.fullmatch(r'\d{2}[.]\d{2}[.]\d{4}', new_birthday_clear)
             if match and len(new_birthday_clear) == 10:
@@ -109,9 +108,8 @@ class Phone(Field):
     
     @value.setter
     def value(self, new_phone):
-        if not new_phone:
-            pass
-        else:
+        
+        if new_phone:
             phone_clear = new_phone.strip()
             match = re.fullmatch(r'[+]\d{1,}', phone_clear)
             if match:
