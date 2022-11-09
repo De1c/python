@@ -9,6 +9,7 @@ values = {'Two': 2, 'Three': 3, 'Four': 4, 'Five': 5, 'Six': 6, 'Seven': 7, 'Eig
 playing = True
 
 
+
 class Card:
 
     def __init__(self, suit, rank):
@@ -140,6 +141,7 @@ def show_some(player,dealer):
     print(' <card is hidden> ')
     print('',dealer.cards[1])
     print("\n Player's hand:", *player.cards , sep='\n')
+    print(player.value)
 
 def show_all(player,dealer):
     """_summary_
@@ -153,7 +155,7 @@ def show_all(player,dealer):
     print("Dealer's Hand =",dealer.value)
     print("\nPlayer's Hand:", *player.cards, sep='\n ')
     print("Player's Hand =",player.value)
-
+    
 def player_busts(player,dealer,chips):
     """_summary_
 

@@ -138,7 +138,7 @@ def change(book, name, old_phone, new_phone):
 
 @input_error
 def show_phone(book, name):
-    return book.data[name].phones
+    return book.data[name].phones.value
 
 
 @input_error
