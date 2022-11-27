@@ -41,7 +41,7 @@ class Name(Field, Output):
 
 
     def get_info(self):
-        return self.value.capitalize()
+        return f"Name:{self.value.capitalize()}"
 
 class Phone(Field, Output):
     def __init__(self, value):
@@ -72,12 +72,12 @@ class Birthday(Field, Output):
         self._value = value
 
     def get_info(self):
-        return self.value
+        return f"Birthday:\t{self.value}"
 
 
 class Adress(Field, Output):
     def get_info(self):
-        return self.value
+        return f"Address:\t{self.value}"
 
 
 class Email(Field, Output):
@@ -93,7 +93,7 @@ class Email(Field, Output):
 
 
     def get_info(self):
-        return self.value
+        return f"Email:\t{self.value}"
 
 class Tag(Field, Output):
     def __init__(self, value):
@@ -115,11 +115,11 @@ class Tag(Field, Output):
 
 
     def get_info(self):
-        return self.value
+        return f"Tags:{self.value}"
 
 class NoteText(Field, Output):
     def get_info(self):
-        return f"Text:{self.value}"
+        return f"Note text:{self.value}"
 
 
 class Notification:

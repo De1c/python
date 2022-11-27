@@ -251,13 +251,13 @@ def searcher_notes():
 
 def show_contact(record: Record):
     print(f"{record.name.get_info()}\n")
-    print(f"Phones:\t{record.phone.get_info()}\n")
+    print(f"\tPhones:\t{record.phone.get_info()}\n")
     if record.email:
-        print(f"Email:\t{record.email.get_info()}\n")
+        print(f"\t{record.email.get_info()}\n")
     if record.adress:
         print(f"\t{record.adress.get_info()}\n")
     if record.birthday:
-        print(f"Birthday:\t{record.birthday.get_info()}\n")
+        print(f"\t{record.birthday.get_info()}\n")
 
 
 def show_all():
