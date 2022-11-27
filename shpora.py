@@ -2,15 +2,15 @@
 
 # def token_parser(s):
 
-    # final_list = []
-    # my_list = re.findall(r'\d+', s)
-    # my_list2 = re.findall(r'\+|\-|\/|\*', s)
-    # for el1, el2 in zip(my_list, my_list2):
-        # final_list.append(el1)
-        # final_list.append(el2)
-    # las_el = my_list[-1]
-    # final_list.append(las_el)
-    # return final_list
+# final_list = []
+# my_list = re.findall(r'\d+', s)
+# my_list2 = re.findall(r'\+|\-|\/|\*', s)
+# for el1, el2 in zip(my_list, my_list2):
+# final_list.append(el1)
+# final_list.append(el2)
+# las_el = my_list[-1]
+# final_list.append(las_el)
+# return final_list
 
 
 # print(token_parser("2+ 34 -5 * 3"))
@@ -51,7 +51,6 @@
 #         ['avi', 'mp4', 'mov', 'mkv'],
 #         ['doc', 'docx', 'txt', 'pdf', 'xlsx', 'pptx'],
 #         ['mp3', 'ogg', 'wav', 'amr'],
-#         ['zip', 'gz', 'tar']
 # ]
 
 # for e_type in TYPES:
@@ -64,7 +63,7 @@
 
 # some_str = 'aaAbbB C F DDd EEe'
 # for i in filter(lambda x: x.islower(), some_str):
-    # print(i) - Only Lower
+# print(i) - Only Lower
 
 # string = 'Hello'
 # lst = ['world', 'friend', 'Yehor']
@@ -104,4 +103,8 @@
 #     for row in spam_reader:
 #         print(', '.join(row))
 
+# import re
 
+# my_str = '1'
+# obj = re.findall(r'[0-9]', my_str)
+# print(obj)
